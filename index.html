@@ -71,13 +71,13 @@
 
 <script>
   // Configuração do broker MQTT
-  const broker = "wss://broker.hivemq.com:1883/mqtt";
+  const broker = "wss://broker.hivemq.com:8884/mqtt";
   const clientId = "esp32-reflector";
   const topicoOn = "reflector/on";
   const topicoOff = "reflector/off";
 
   // Conectar ao broker
-  const client = mqtt.connect(broker, { clientId });
+  const client = mqtt.connect(broker, { clientId, clean: true, connectTimeout: 4000 });
 
   client.on("connect", () => {
     console.log("Conectado ao MQTT!");
