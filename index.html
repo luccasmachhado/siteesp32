@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Controle ESP32 MQTT</title>
 
-  <!-- Biblioteca MQTT -->
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
 
   <style>
@@ -61,43 +60,87 @@
 <body>
 
 <div class="container">
-  <h1>Controle do LED ESP32</h1>
 
-  <button class="on" onclick="ligarLed()">LIGAR LED</button>
-  <button class="off" onclick="desligarLed()">DESLIGAR LED</button>
+  <h1>Controle ESP32</h1>
 
-  <p id="status">Conectando ao MQTT...</p>
+  <button class="on" onclick="ligarLed()">
+    LIGAR LED
+  </button>
+
+  <button class="off" onclick="desligarLed()">
+    DESLIGAR LED
+  </button>
+
+  <p id="status">
+    Conectando MQTT...
+  </p>
+
 </div>
 
 <script>
-  // Configuração do broker MQTT
-  const broker = "wss://broker.hivemq.com:8884/mqtt";
-  const clientId = "esp32-reflector";
+
+  // =====================================
+  // CONFIG MQTT
+  // =====================================
+
+  const broker =
+  "wss://fff567fb3b6e42cabc200996cee91ce1.s1.eu.hivemq.cloud:8884/mqtt";
+
+  const options = {
+
+    clientId: "esp32-reflector",
+
+    username: "reflector",
+
+    password: "Reflector1",
+
+    clean: true,
+
+    connectTimeout: 4000
+  };
+
   const topico = "reflector";
 
-  // Conectar ao broker
-  const client = mqtt.connect(broker, { clientId, clean: true, connectTimeout: 4000 });
+  // =====================================
+  // CONECTAR
+  // =====================================
+
+  const client = mqtt.connect(broker, options);
 
   client.on("connect", () => {
-    console.log("Conectado ao MQTT!");
-    document.getElementById("status").innerText = "Conectado ao MQTT";
+
+    console.log("MQTT conectado!");
+
+    document.getElementById("status").innerText =
+      "MQTT conectado!";
   });
 
   client.on("error", (err) => {
+
     console.error(err);
-    document.getElementById("status").innerText = "Erro na conexão MQTT";
+
+    document.getElementById("status").innerText =
+      "Erro MQTT";
   });
 
-  // Funções dos botões
+  // =====================================
+  // FUNCOES
+  // =====================================
+
   function ligarLed() {
+
     client.publish(topico, "ON");
-    console.log("LED LIGADO");
+
+    console.log("ON enviado");
   }
 
   function desligarLed() {
+
     client.publish(topico, "OFF");
-    console.log("LED DESLIGADO");
+
+    console.log("OFF enviado");
   }
+
 </script>
 
 </body>
