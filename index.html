@@ -73,8 +73,7 @@
   // Configuração do broker MQTT
   const broker = "wss://broker.hivemq.com:8884/mqtt";
   const clientId = "esp32-reflector";
-  const topicoOn = "reflector/on";
-  const topicoOff = "reflector/off";
+  const topico = "reflector";
 
   // Conectar ao broker
   const client = mqtt.connect(broker, { clientId, clean: true, connectTimeout: 4000 });
@@ -91,12 +90,12 @@
 
   // Funções dos botões
   function ligarLed() {
-    client.publish(topicoOn);
+    client.publish(topico, "ON");
     console.log("LED LIGADO");
   }
 
   function desligarLed() {
-    client.publish(topicoOff);
+    client.publish(topico, "OFF");
     console.log("LED DESLIGADO");
   }
 </script>
