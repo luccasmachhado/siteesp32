@@ -99,7 +99,7 @@ client.on('error', function (err) {
 function ligar(){
 
   client.publish(
-    'esp32/refletor/ligar-desligar',
+    'esp32/led',
     'ON'
   );
 
@@ -109,7 +109,7 @@ function ligar(){
 function desligar(){
 
   client.publish(
-    'esp32/refletor/ligar-desligar',
+    'esp32/led',
     'OFF'
   );
 
